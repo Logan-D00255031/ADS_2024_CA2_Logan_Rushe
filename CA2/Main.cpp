@@ -4,7 +4,6 @@
 #include "TreeMap.h"
 
 #include <iostream>
-#include "Main.h"
 
 using namespace std;
 void DisplayBool(bool b);
@@ -13,18 +12,17 @@ int main()
 {
 	int a = 6;
 	int b = 5;
-	TreeMapNode<int, int> *n = new TreeMapNode<int, int>(4);
-	TreeMapNode<int, int> *n2 = new TreeMapNode<int, int>(5);
-	//cout << n->getKey() << " < " << n2->getKey() << endl;
-	bool test = n < n2;
+	TreeMapNode<int, int> node1(a);
+	TreeMapNode<int, int> node2(b);
+	TreeMapNode<int, int> node3(a);
+	bool test = node1 < node2;
 	DisplayBool(test);
-	test = n > n2;
+	test = node1 > node2;
 	DisplayBool(test);
-	test = n == n2;
+	test = node3 == node1;
 	DisplayBool(test);
-	test = n != n2;
+	test = node1 != node3;
 	DisplayBool(test);
-	//cout << test << endl;
 }
 
 void DisplayBool(bool b)

@@ -14,6 +14,10 @@ public:
 	TreeMapNode();
 	TreeMapNode(const TreeMapNode<K, V>& other);
 	TreeMapNode<K, V> operator=(const TreeMapNode<K, V>& other);
+	bool operator>(const TreeMapNode<K, V>& other);
+	bool operator<(const TreeMapNode<K, V>& other);
+	bool operator==(const TreeMapNode<K, V>& other);
+	bool operator!=(const TreeMapNode<K, V>& other);
 	V& getValue();
 	void setValue(V value);
 	BSTNode<K>* getKey(K key);
@@ -34,14 +38,46 @@ TreeMapNode<K, V>::TreeMapNode(const TreeMapNode<K, V>& other)
 	key = nullptr;
 	if (other.key != nullptr) 
 	{
-		this->key = new BSTNode<K>(*other);
+		this->key = new BSTNode<K>(*other.key);
 	}
 }
 
 template<class K, class V>
 TreeMapNode<K, V> TreeMapNode<K, V>::operator=(const TreeMapNode<K, V>& other)
 {
-	return TreeMapNode<K, V>(); // DO
+	if (this == &other)
+	{
+		return this;
+	}
+	key = nullptr;
+	if (other.key != nullptr)
+	{
+		this->key = new BSTNode<K>(*other.key);
+	}
+}
+
+template<class K, class V>
+bool TreeMapNode<K, V>::operator>(const TreeMapNode<K, V>& other)	// Overloaded > operator when comparing to another TreeMapNode
+{
+	return this->key > other.key;
+}
+
+template<class K, class V>
+bool TreeMapNode<K, V>::operator<(const TreeMapNode<K, V>& other)	// Overloaded < operator when comparing to another TreeMapNode
+{
+	return this->key < other.key;
+}
+
+template<class K, class V>
+bool TreeMapNode<K, V>::operator==(const TreeMapNode<K, V>& other)	// Overloaded == operator when comparing to another TreeMapNode
+{
+	return this->key == other.key;
+}
+
+template<class K, class V>
+bool TreeMapNode<K, V>::operator!=(const TreeMapNode<K, V>& other)	// Overloaded != operator when comparing to another TreeMapNode
+{
+	return this->key != other.key;
 }
 
 template<class K, class V>

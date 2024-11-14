@@ -12,6 +12,7 @@ class TreeMapNode
 
 public:
 	TreeMapNode();
+	TreeMapNode(K key);
 	TreeMapNode(const TreeMapNode<K, V>& other);
 	TreeMapNode<K, V> operator=(const TreeMapNode<K, V>& other);
 	bool operator>(const TreeMapNode<K, V>& other);
@@ -30,6 +31,12 @@ template<class K, class V>
 TreeMapNode<K, V>::TreeMapNode()
 {
 	key = nullptr;
+}
+
+template<class K, class V>
+inline TreeMapNode<K, V>::TreeMapNode(K key)
+{
+	this->key = *key;
 }
 
 template<class K, class V>

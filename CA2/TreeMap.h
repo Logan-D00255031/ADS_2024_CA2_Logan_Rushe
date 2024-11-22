@@ -79,7 +79,7 @@ V& TreeMap<K, V>::get(K key)
 {
 	if (!containsKey(key))
 	{
-		return NULL;
+		return;
 	}
 	TreeMapNode<K, V> foundKey = BST->get(new TreeMapNode<K, V>(key));
 	return foundKey.getValue();
@@ -102,7 +102,7 @@ void TreeMap<K, V>::put(K key, V value)
 {
 	if (!containsKey(key))
 	{
-		BST->add(new TreeMapNode<K, V>(key, value);
+		BST->add(new TreeMapNode<K, V>(key, value));
 	}
 	else
 	{

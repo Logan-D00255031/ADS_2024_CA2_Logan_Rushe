@@ -5,6 +5,8 @@ VisualStudioVersion = 17.10.35004.147
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CA2", "CA2\CA2.vcxproj", "{7F7D31E1-E3C8-4360-BFC9-CD43D40E7106}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TreeMapTest", "TreeMapTest\TreeMapTest.vcxproj", "{66B4A824-8614-4BA4-970D-0A52DE8D1218}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{7F7D31E1-E3C8-4360-BFC9-CD43D40E7106}.Release|x64.Build.0 = Release|x64
 		{7F7D31E1-E3C8-4360-BFC9-CD43D40E7106}.Release|x86.ActiveCfg = Release|Win32
 		{7F7D31E1-E3C8-4360-BFC9-CD43D40E7106}.Release|x86.Build.0 = Release|Win32
+		{66B4A824-8614-4BA4-970D-0A52DE8D1218}.Debug|x64.ActiveCfg = Debug|x64
+		{66B4A824-8614-4BA4-970D-0A52DE8D1218}.Debug|x64.Build.0 = Debug|x64
+		{66B4A824-8614-4BA4-970D-0A52DE8D1218}.Debug|x86.ActiveCfg = Debug|Win32
+		{66B4A824-8614-4BA4-970D-0A52DE8D1218}.Debug|x86.Build.0 = Debug|Win32
+		{66B4A824-8614-4BA4-970D-0A52DE8D1218}.Release|x64.ActiveCfg = Release|x64
+		{66B4A824-8614-4BA4-970D-0A52DE8D1218}.Release|x64.Build.0 = Release|x64
+		{66B4A824-8614-4BA4-970D-0A52DE8D1218}.Release|x86.ActiveCfg = Release|Win32
+		{66B4A824-8614-4BA4-970D-0A52DE8D1218}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

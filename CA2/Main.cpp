@@ -23,6 +23,11 @@ int main()
 	DisplayBool(test);
 	test = node1 != node3;
 	DisplayBool(test);
+
+	TreeMap<int, string> *map = new TreeMap<int, string>();
+	map->put(1, "hi");
+	cout << "string in key 1: ";
+	cout << map->get(1) << endl;
 }
 
 void DisplayBool(bool b)

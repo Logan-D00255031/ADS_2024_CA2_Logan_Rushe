@@ -25,7 +25,7 @@ namespace TreeMapTest
 			Assert::AreEqual(map->get(3), c);
 			map->clear();
 			string nullString = map->get(2);
-			string nullString2 = NULL;
+			string nullString2 = "";
 			Assert::AreEqual(nullString, nullString2);
 		}
 	};

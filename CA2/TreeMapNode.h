@@ -11,6 +11,7 @@ class TreeMapNode
 	V value;
 
 public:
+	TreeMapNode();
 	TreeMapNode(K key, V value);
 	TreeMapNode(K key);
 	TreeMapNode(const TreeMapNode<K, V>& other);
@@ -26,6 +27,12 @@ public:
 	~TreeMapNode() = default;
 
 };
+
+template<class K, class V>
+inline TreeMapNode<K, V>::TreeMapNode()
+{
+
+}
 
 template<class K, class V>
 TreeMapNode<K, V>::TreeMapNode(K key, V value)

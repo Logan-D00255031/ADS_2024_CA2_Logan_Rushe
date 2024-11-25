@@ -65,23 +65,34 @@ void TreeMap<K, V>::clear()
 template<class K, class V>
 bool TreeMap<K, V>::containsKey(K key)
 {
-	TreeMapNode<K, V> *desiredKey = new TreeMapNode<K, V>(key);
-	TreeMapNode<K, V> foundKey = BST->get(*desiredKey);
-	if (foundKey.getKey() == key)
+	if (BST == nullptr || BST->root == nullptr) 
 	{
-		return true;
+		return false;
 	}
-	return false;
+	TreeMapNode<K, V> desiredKey(key);
+	try {
+		TreeMapNode<K, V> foundKey = BST->get(desiredKey);
+		return foundKey.getKey() == key;
+	}
+	catch (const logic_error&)
+	{
+		return false;
+	}
 }
 
 template<class K, class V>
 V& TreeMap<K, V>::get(K key)
 {
+	if (BST == nullptr || BST->root == nullptr)
+	{
+		throw logic_error("Tree is empty");
+	}
 	if (!containsKey(key))
 	{
 		throw logic_error("Item not found");
 	}
-	TreeMapNode<K, V> foundKey = BST->get(*new TreeMapNode<K, V>(key));
+	TreeMapNode<K, V> desiredKey(key);
+	TreeMapNode<K, V>& foundKey = BST->get(desiredKey);
 	return foundKey.getValue();
 }
 
@@ -100,17 +111,19 @@ BinaryTree<K> TreeMap<K, V>::keySet()
 template<class K, class V>
 void TreeMap<K, V>::put(K key, V value)
 {
-	if (BST->count() == 0)
+	if (BST == nullptr)
 	{
-		BST->add(*new TreeMapNode<K, V>(key, value));
+		BST = new BinaryTree<TreeMapNode<K, V>>();
 	}
-	else if (!containsKey(key))
+	if (!containsKey(key))
 	{
-		BST->add(*new TreeMapNode<K, V>(key, value));
+		TreeMapNode<K, V> newNode(key, value);
+		BST->add(newNode);
 	}
 	else
 	{
-		TreeMapNode<K, V> currentKey = BST->get(*new TreeMapNode<K, V>(key));
+		TreeMapNode<K, V> desiredKey(key);
+		TreeMapNode<K, V>& currentKey = BST->get(desiredKey);
 		currentKey.setValue(value);
 	}
 }

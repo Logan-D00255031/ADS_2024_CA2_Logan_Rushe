@@ -29,7 +29,7 @@ public:
 };
 
 template<class K, class V>
-inline TreeMapNode<K, V>::TreeMapNode()
+TreeMapNode<K, V>::TreeMapNode()
 {
 
 }

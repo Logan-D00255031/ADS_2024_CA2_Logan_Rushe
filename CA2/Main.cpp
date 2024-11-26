@@ -35,7 +35,7 @@ int main()
 	cout << "string in key 3: ";
 	cout << map->get(3) << endl;*/
 
-	TreeMap<char, vector<string>> map;
+	TreeMap<char, BinaryTree<string>> map;
 	
 	string fileName = "TextFile.txt";
 	ifstream fin(fileName);
@@ -60,13 +60,13 @@ int main()
 				char letter = wordToInput.front();
 				if (!map.containsKey(letter))
 				{
-					vector<string> newList;
-					newList.push_back(wordToInput);
-					map.put(letter, newList);
+					BinaryTree<string> newTree;
+					newTree.add(wordToInput);
+					map.put(letter, newTree);
 				}
 				else
 				{
-					map.get(letter).push_back(wordToInput);
+					map.get(letter).add(wordToInput);
 				}
 			}
 		}

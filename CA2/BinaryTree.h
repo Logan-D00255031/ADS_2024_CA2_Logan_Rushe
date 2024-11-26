@@ -1,11 +1,12 @@
 ﻿#pragma once
 #include "BSTNode.h"
 
-#include <vector>
+using namespace std;
+
 template <class T>
 class BinaryTree
 {
-	void addItemToArray(BSTNode<T>* node, int &pos, T *arr);
+	void addItemToArray(BSTNode<T>* node, int &pos, T *arr) const;
 public:
 	BSTNode<T> *root;
 	BinaryTree();
@@ -14,7 +15,7 @@ public:
 	void add(T& item);
 	bool remove(T& item);
 	void clear();
-	int count();
+	int count() const;
 	T& get(T& item);
 
 	void printInOrder();
@@ -23,8 +24,9 @@ public:
 	void printPreOrder(BSTNode<T> *node);
 	void printPostOrder();
 	void printPostOrder(BSTNode<T> *node);
-	void print();
-	T* toArray();
+	T* toArray() const;
+	template<class T>
+	friend ostream& operator<<(ostream& os, const BinaryTree<T>& tree);
 	~BinaryTree();
 };
 
@@ -67,7 +69,7 @@ void BinaryTree<T>::add(T& item)
 	}
 }
 template <class T>
-int BinaryTree<T>::count()
+int BinaryTree<T>::count() const
 {
 	if (root == nullptr)
 		return 0;
@@ -168,7 +170,7 @@ T& BinaryTree<T>::get(T& item)
 	throw logic_error("ITem not found");
 }
 template <class T>
-void BinaryTree<T>::addItemToArray(BSTNode<T>* node, int &pos, T *arr)
+void BinaryTree<T>::addItemToArray(BSTNode<T>* node, int &pos, T *arr) const
 {
 	if (node != nullptr)
 	{
@@ -181,7 +183,7 @@ void BinaryTree<T>::addItemToArray(BSTNode<T>* node, int &pos, T *arr)
 }
 
 template <class T>
-T* BinaryTree<T>::toArray()
+T* BinaryTree<T>::toArray() const
 {
 	T *arr = new T[root->count()];
 	int pos = 0;
@@ -243,17 +245,26 @@ void BinaryTree<T>::printPostOrder(BSTNode<T> *node)
 }
 
 template<class T>
-void BinaryTree<T>::print()
+ostream& operator<<(ostream& os, const BinaryTree<T>& tree)
 {
-	T* arr = toArray();
-	cout << "{";
-	for (int i = 0; i < count(); i++)
+	if (tree.count() == 0)
 	{
-		cout << arr[i];
-		if (i < count() - 1)
+		os << "{}";
+		return os;
+	}
+
+	T* arr = tree.toArray();
+	os << "{";
+	for (int i = 0; i < tree.count(); i++)
+	{
+		os << arr[i];
+		if (i < tree.count() - 1)
 		{
-			cout << ", ";
+			os << ", ";
 		}
 	}
-	cout << "}" << endl;
+	os << "}";
+
+	delete[] arr;
+	return os;
 }

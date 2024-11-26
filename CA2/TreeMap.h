@@ -180,7 +180,7 @@ V& TreeMap<K, V>::operator[](K key)
 template<class K, class V>
 void TreeMap<K, V>::print()
 {
-	BST->print();
+	cout << *BST << endl;
 }
 
 template <class K, class V>

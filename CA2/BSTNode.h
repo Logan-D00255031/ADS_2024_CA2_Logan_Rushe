@@ -25,6 +25,12 @@ public:
 	void setLeft(BSTNode<T> *l);
 	void setRight(BSTNode<T> *r);
 	T& getItem();
+	template<class K, class V>
+	friend ostream& operator<<(ostream& os, const BSTNode<T>& node)
+	{
+		os << "Data: " << node.data;
+		return os;
+	}
 	~BSTNode();
 
 };

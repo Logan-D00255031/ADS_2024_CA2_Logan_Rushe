@@ -69,15 +69,18 @@ void TreeMap<K, V>::clear()
 template<class K, class V>
 bool TreeMap<K, V>::containsKey(K key)
 {
+	// The Tree does not contain the key if it's null or empty
 	if (BST == nullptr || BST->root == nullptr) 
 	{
 		return false;
 	}
+
 	TreeMapNode<K, V> desiredKey(key);
 	try {
 		TreeMapNode<K, V> foundKey = BST->get(desiredKey);
 		return foundKey.getKey() == key;
 	}
+	// BST's get() method will throw an error if it does not contain the key so we catch it to return false
 	catch (const logic_error&)
 	{
 		return false;
@@ -87,6 +90,7 @@ bool TreeMap<K, V>::containsKey(K key)
 template<class K, class V>
 V& TreeMap<K, V>::get(K key)
 {
+	// Throw a logic error if BST is null or empty, or it does not contain the key
 	if (BST == nullptr || BST->root == nullptr)
 	{
 		throw logic_error("Tree is empty");
@@ -103,7 +107,7 @@ V& TreeMap<K, V>::get(K key)
 template<class K, class V>
 BinaryTree<K> TreeMap<K, V>::keySet()
 {
-	// return empty BinaryTree if BST is empty or nullptr to prevent errors
+	// return empty BinaryTree if BST is empty or null to prevent errors
 	if (BST == nullptr || BST->root == nullptr)
 	{
 		return BinaryTree<K>();
@@ -144,24 +148,32 @@ void TreeMap<K, V>::put(K key, V value)
 template<class K, class V>
 int TreeMap<K, V>::size()
 {
+	// Its size is zero if BST is null
+	if (BST == nullptr)
+	{
+		return 0;
+	}
+	// The size is the same as BST's size so we call its count method
 	return BST->count();
 }
 
 template<class K, class V>
 bool TreeMap<K, V>::removeKey(K key)
 {
-	return BST->remove(new TreeMapNode<K, V>(key));
+	// There is no key to remove if BST is null
+	if (BST == nullptr)
+	{
+		return false;
+	}
+	TreeMapNode<K, V> keyToRemove(key);
+	return BST->remove(keyToRemove);
 }
 
 template<class K, class V>
 V& TreeMap<K, V>::operator[](K key)
 {
-	if (!containsKey(key))
-	{
-		throw logic_error("Key not found");
-	}
-	TreeMapNode<K, V> foundKey = BST->get(new TreeMapNode<K, V>(key));
-	return foundKey.getValue();
+	// This method uses the same logic as get() to prevent duplicate code
+	return this->get(key);
 }
 
 template <class K, class V>

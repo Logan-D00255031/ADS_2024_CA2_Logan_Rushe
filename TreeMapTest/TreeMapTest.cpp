@@ -46,8 +46,9 @@ namespace TreeMapTest
 			map->put(s1, l1);
 			map->put(s2, l2);
 			map->put(s3, l3);
-			Assert::AreEqual(map->get(s1).size(), l1.size(), L"Key value has incorrect size");
-			Assert::AreEqual(map->get(s3).front(), l3.front(), L"Key value has incorrect front value");
+			Assert::IsTrue((map->get(s1) == l1), L"Key contains incorrect value");
+			Assert::IsTrue((map->get(s2) == l2), L"Key contains incorrect value");
+			Assert::IsTrue((map->get(s3) == l3), L"Key contains incorrect value");
 			map->clear();
 			auto funct = [&]() {map->get(s2); };
 			Assert::ExpectException<logic_error>(funct, L"Exception not thrown");
@@ -111,6 +112,64 @@ namespace TreeMapTest
 			map->put(s3, l3);
 			BinaryTree<string> keyMap(map->keySet());
 			Assert::AreEqual(keyMap.count(), 3, L"Key Set has incorrect size");
+		}
+
+		TEST_METHOD(testReturnSizeWhenEmpty)
+		{
+			TreeMap<string, list<string>>* map = new TreeMap<string, list<string>>();
+			Assert::AreEqual(map->size(), 0, L"Map has incorrect size");
+		}
+
+		TEST_METHOD(testReturnSize)
+		{
+			TreeMap<string, list<string>>* map = new TreeMap<string, list<string>>();
+			map->put(s2, l2);
+			map->put(s3, l3);
+			Assert::AreEqual(map->size(), 2, L"Map has incorrect size");
+		}
+
+		TEST_METHOD(testRemoveKeyWhenEmpty)
+		{
+			TreeMap<string, list<string>>* map = new TreeMap<string, list<string>>();
+			Assert::IsFalse(map->removeKey(s2), L"Key was removed from Map");
+		}
+
+		TEST_METHOD(testRemoveKeyFromTreeMap)
+		{
+			TreeMap<string, list<string>>* map = new TreeMap<string, list<string>>();
+			map->put(s1, l1);
+			map->put(s3, l3);
+			map->put(s2, l2);
+			Assert::IsTrue(map->removeKey(s2), L"Key was not removed from Map");
+			Assert::AreEqual(map->size(), 2, L"Map is incorrect size");
+			Assert::IsTrue((map->get(s3) == l3), L"Key contains incorrect value");
+			Assert::IsTrue((map->get(s1) == l1), L"Key contains incorrect value");
+			auto funct = [&]() {map->get(s2); };
+			Assert::ExpectException<logic_error>(funct, L"Exception not thrown - Map still contains key");
+		}
+
+		TEST_METHOD(testGetValueOfKeyNotInTreeMapFromOperator)
+		{
+			TreeMap<string, list<string>> map;
+			map.put(s3, l3);
+			auto funct = [&]() {map[s1]; };
+			Assert::ExpectException<logic_error>(funct, L"No exception thrown");
+		}
+
+		TEST_METHOD(testGetValueOfKeyFromClearedTreeMapFromOperator)
+		{
+			TreeMap<string, list<string>> map;
+			map.clear();
+			auto funct = [&]() {map[s2]; };
+			Assert::ExpectException<logic_error>(funct, L"No exception thrown");
+		}
+
+		TEST_METHOD(testGetValueOfKeyContainedInTreeMapFromOperator)
+		{
+			TreeMap<string, list<string>> map;
+			map.put(s1, l1);
+			map.put(s2, l2);
+			Assert::IsTrue(map.get(s2) == l2, L"Key contains incorrect value");
 		}
 	};
 }

@@ -2,6 +2,8 @@
 #include "BSTNode.h"
 
 #include <iostream>
+#include <vector>
+#include "VectorOperatorOverload.h"	// Needed to print vectors from cout <<
 
 using namespace std;
 template <class K, class V>
@@ -20,6 +22,12 @@ public:
 	bool operator<(const TreeMapNode<K, V>& other) const;
 	bool operator==(const TreeMapNode<K, V>& other) const;
 	bool operator!=(const TreeMapNode<K, V>& other) const;
+	template<class K, class V>
+	friend ostream& operator<<(ostream& os, const TreeMapNode<K, V>& node)
+	{
+		os << "[Key: " << node.key << ", Value: " << node.value << "]";
+		return os;
+	}
 	V& getValue();
 	void setValue(V value);
 	K getKey() const;
@@ -67,28 +75,28 @@ TreeMapNode<K, V>& TreeMapNode<K, V>::operator=(const TreeMapNode<K, V>& other)
 template<class K, class V>
 bool TreeMapNode<K, V>::operator>(const TreeMapNode<K, V>& other) const	// Overloaded > operator when comparing to another TreeMapNode
 {
-	cout << "Comparing " << this->key << " > " << other.key << endl;
+	//cout << "Comparing " << this->key << " > " << other.key << endl;
 	return this->key > other.key;
 }
 
 template<class K, class V>
 bool TreeMapNode<K, V>::operator<(const TreeMapNode<K, V>& other) const	// Overloaded < operator when comparing to another TreeMapNode
 {
-	cout << "Comparing " << this->key << " < " << other.key << endl;
+	//cout << "Comparing " << this->key << " < " << other.key << endl;
 	return this->key < other.key;
 }
 
 template<class K, class V>
 bool TreeMapNode<K, V>::operator==(const TreeMapNode<K, V>& other) const	// Overloaded == operator when comparing to another TreeMapNode
 {
-	cout << "Comparing " << this->key << " == " << other.key << endl;
+	//cout << "Comparing " << this->key << " == " << other.key << endl;
 	return this->key == other.key;
 }
 
 template<class K, class V>
 bool TreeMapNode<K, V>::operator!=(const TreeMapNode<K, V>& other) const	// Overloaded != operator when comparing to another TreeMapNode
 {
-	cout << "Comparing " << this->key << " != " << other.key << endl;
+	//cout << "Comparing " << this->key << " != " << other.key << endl;
 	return this->key != other.key;
 }
 

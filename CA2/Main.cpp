@@ -4,13 +4,17 @@
 #include "TreeMap.h"
 
 #include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+#include "VectorOperatorOverload.h"
 
 using namespace std;
 void DisplayBool(bool b);
 
 int main() 
 {
-	int a = 6;
+	/*int a = 6;
 	int b = 5;
 	TreeMapNode<int, int> node1(a);
 	TreeMapNode<int, int> node2(b);
@@ -26,8 +30,54 @@ int main()
 
 	TreeMap<int, string> *map = new TreeMap<int, string>();
 	map->put(1, "hi");
-	cout << "string in key 1: ";
-	cout << map->get(1) << endl;
+	map->put(2, "bye");
+	map->put(3, "hello");
+	cout << "string in key 3: ";
+	cout << map->get(3) << endl;*/
+
+	TreeMap<char, vector<string>> map;
+	
+	string fileName = "TextFile.txt";
+	ifstream fin(fileName);
+	if (fin)
+	{
+		string fileWord;
+		while (!fin.eof())
+		{
+			fin >> fileWord;
+			// Filter out any non-alphabetic characters as the word should only be comprised of letters
+			string wordToInput = "";
+			for (char c : fileWord)
+			{
+				if (isalpha(c))
+				{
+					wordToInput += c;
+				}
+			}
+
+			if (!wordToInput.empty())
+			{
+				char letter = wordToInput.front();
+				if (!map.containsKey(letter))
+				{
+					vector<string> newList;
+					newList.push_back(wordToInput);
+					map.put(letter, newList);
+				}
+				else
+				{
+					map.get(letter).push_back(wordToInput);
+				}
+			}
+		}
+		fin.close();
+	}
+	else
+	{
+		cout << "Unable to open file" << endl;
+	}
+	
+	map.print();
 }
 
 void DisplayBool(bool b)

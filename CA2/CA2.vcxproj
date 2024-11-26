@@ -131,9 +131,13 @@
     <ClInclude Include="BSTNode.h" />
     <ClInclude Include="TreeMap.h" />
     <ClInclude Include="TreeMapNode.h" />
+    <ClInclude Include="VectorOperatorOverload.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="TextFile.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

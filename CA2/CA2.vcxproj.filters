@@ -27,10 +27,18 @@
     <ClInclude Include="TreeMapNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="VectorOperatorOverload.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="TextFile.txt">
+      <Filter>Source Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

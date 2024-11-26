@@ -24,6 +24,7 @@ public:
 	int size();
 	bool removeKey(K key);
 	V& operator[](K key);
+	void print();
 	~TreeMap<K, V>();
 
 };
@@ -174,6 +175,12 @@ V& TreeMap<K, V>::operator[](K key)
 {
 	// This method uses the same logic as get() to prevent duplicate code
 	return this->get(key);
+}
+
+template<class K, class V>
+void TreeMap<K, V>::print()
+{
+	BST->print();
 }
 
 template <class K, class V>

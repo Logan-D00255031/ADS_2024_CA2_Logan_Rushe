@@ -23,6 +23,7 @@ public:
 	void printPreOrder(BSTNode<T> *node);
 	void printPostOrder();
 	void printPostOrder(BSTNode<T> *node);
+	void print();
 	T* toArray();
 	~BinaryTree();
 };
@@ -239,4 +240,20 @@ template<class T>
 void BinaryTree<T>::printPostOrder(BSTNode<T> *node)
 {
 
+}
+
+template<class T>
+void BinaryTree<T>::print()
+{
+	T* arr = toArray();
+	cout << "{";
+	for (int i = 0; i < count(); i++)
+	{
+		cout << arr[i];
+		if (i < count() - 1)
+		{
+			cout << ", ";
+		}
+	}
+	cout << "}" << endl;
 }

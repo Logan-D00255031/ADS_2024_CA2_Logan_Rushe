@@ -57,6 +57,10 @@ TreeMap<K, V> TreeMap<K, V>::operator=(const TreeMap<K, V>& other)
 template<class K, class V>
 void TreeMap<K, V>::clear()
 {
+	if (BST == nullptr || BST->root == nullptr)
+	{
+		return;
+	}
 	BST->clear();
 	delete BST;
 	BST = nullptr;
@@ -99,12 +103,21 @@ V& TreeMap<K, V>::get(K key)
 template<class K, class V>
 BinaryTree<K> TreeMap<K, V>::keySet()
 {
-	TreeMapNode<K, V> *keyArr = BST->toArray();
-	BinaryTree<K> keyTree = new BinaryTree<K>;
-	for (TreeMapNode<K, V> currentNode : keyArr) 
+	// return empty BinaryTree if BST is empty or nullptr to prevent errors
+	if (BST == nullptr || BST->root == nullptr)
 	{
-		keyTree.add(currentNode.getKey());
+		return BinaryTree<K>();
 	}
+
+	TreeMapNode<K, V>* keyArr = BST->toArray();
+
+	BinaryTree<K> keyTree;
+	for (int i = 0; i < BST->count(); i++)
+	{
+		keyTree.add(keyArr[i].getKey());
+	}
+
+	delete[] keyArr;
 	return keyTree;
 }
 

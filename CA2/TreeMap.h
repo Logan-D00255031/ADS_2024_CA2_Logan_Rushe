@@ -126,7 +126,8 @@ BinaryTree<K> TreeMap<K, V>::keySet()
 	BinaryTree<K> keyTree;
 	for (int i = 0; i < BST->count(); i++)
 	{
-		keyTree.add(keyArr[i].getKey());
+		K key = keyArr[i].getKey();
+		keyTree.add(key);
 	}
 
 	delete[] keyArr;

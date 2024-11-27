@@ -112,6 +112,8 @@ namespace TreeMapTest
 			map->put(s3, l3);
 			BinaryTree<string> keyMap(map->keySet());
 			Assert::AreEqual(keyMap.count(), 3, L"Key Set has incorrect size");
+			Assert::AreEqual(keyMap.get(s2), s2, L"Key Set has incorrect data");
+			Assert::AreEqual(keyMap.get(s1), s1, L"Key Set has incorrect data");
 		}
 
 		TEST_METHOD(testReturnSizeWhenEmpty)

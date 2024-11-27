@@ -32,12 +32,15 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
+    <ClCompile Include="Part2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="TextFile.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="TextFile2.txt">
       <Filter>Source Files</Filter>
     </Text>
   </ItemGroup>

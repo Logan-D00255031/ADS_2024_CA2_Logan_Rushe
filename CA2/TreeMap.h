@@ -55,6 +55,7 @@ TreeMap<K, V> TreeMap<K, V>::operator=(const TreeMap<K, V>& other)
 	return *this;
 }
 
+// Clears all data from the TreeMap
 template<class K, class V>
 void TreeMap<K, V>::clear()
 {
@@ -67,6 +68,8 @@ void TreeMap<K, V>::clear()
 	BST = nullptr;
 }
 
+// Checks if the Tree contains the specified key
+// Returns True if it does, or False otherwise
 template<class K, class V>
 bool TreeMap<K, V>::containsKey(K key)
 {
@@ -88,6 +91,8 @@ bool TreeMap<K, V>::containsKey(K key)
 	}
 }
 
+// Returns the value associated with the specified key
+// Throws a logic error if the key cannot be found
 template<class K, class V>
 V& TreeMap<K, V>::get(K key)
 {
@@ -105,6 +110,8 @@ V& TreeMap<K, V>::get(K key)
 	return foundKey.getValue();
 }
 
+// Returns a BinaryTree of all the keys contained in the TreeMap
+// Returns an empty tree if no data is stored in the TreeMap
 template<class K, class V>
 BinaryTree<K> TreeMap<K, V>::keySet()
 {
@@ -126,6 +133,8 @@ BinaryTree<K> TreeMap<K, V>::keySet()
 	return keyTree;
 }
 
+// Sets the value of the specified key in the TreeMap to the given value
+// Will add a new key to the TreeMap if it has yet to be added
 template<class K, class V>
 void TreeMap<K, V>::put(K key, V value)
 {
@@ -146,6 +155,7 @@ void TreeMap<K, V>::put(K key, V value)
 	}
 }
 
+// Returns the size of the TreeMap
 template<class K, class V>
 int TreeMap<K, V>::size()
 {
@@ -158,6 +168,8 @@ int TreeMap<K, V>::size()
 	return BST->count();
 }
 
+// Removes the specified key from the TreeMap
+// Returns True if successful, or False if the key was not found
 template<class K, class V>
 bool TreeMap<K, V>::removeKey(K key)
 {
@@ -177,6 +189,7 @@ V& TreeMap<K, V>::operator[](K key)
 	return this->get(key);
 }
 
+// Outputs the TreeMap to the console
 template<class K, class V>
 void TreeMap<K, V>::print()
 {

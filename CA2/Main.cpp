@@ -45,15 +45,18 @@ int main()
 		while (!fin.eof())
 		{
 			fin >> fileWord;
-			// Filter out any non-alphabetic characters as the word should only be comprised of letters
+			//cout << fileWord << endl;
+			
 			string wordToInput = "";
+			// Filter out any non-alphabetic characters as the word should only be comprised of letters
 			for (char c : fileWord)
 			{
 				if (isalpha(c))
 				{
-					wordToInput += c;
+					wordToInput += tolower(c);	// Convert to lowercase to avoid duplicate letters in the TreeMap
 				}
 			}
+			
 
 			if (!wordToInput.empty())
 			{
@@ -63,10 +66,12 @@ int main()
 					BinaryTree<string> newTree;
 					newTree.add(wordToInput);
 					map.put(letter, newTree);
+					//cout << "New " << letter << " node added" << endl;
 				}
 				else
 				{
 					map.get(letter).add(wordToInput);
+					//cout << "Added " << wordToInput << " to existing node" << endl;
 				}
 			}
 		}

@@ -22,12 +22,10 @@ public:
 	bool operator<(const TreeMapNode<K, V>& other) const;
 	bool operator==(const TreeMapNode<K, V>& other) const;
 	bool operator!=(const TreeMapNode<K, V>& other) const;
+
 	template<class K, class V>
-	friend ostream& operator<<(ostream& os, const TreeMapNode<K, V>& node)
-	{
-		os << "[Key: " << node.key << ", Value: " << node.value << "]";
-		return os;
-	}
+	friend ostream& operator<<(ostream& os, const TreeMapNode<K, V>& node);
+
 	V& getValue();
 	void setValue(V value);
 	K getKey() const;
@@ -122,4 +120,11 @@ template<class K, class V>
 void TreeMapNode<K, V>::setKey(K key)
 {
 	this->key = key;
+}
+
+template<class K, class V>
+inline ostream& operator<<(ostream& os, const TreeMapNode<K, V>& node)
+{
+	os << "[Key: " << node.key << ", Value: " << node.value << "]";
+	return os;
 }

@@ -8,13 +8,38 @@
 #include <string>
 #include <vector>
 #include "VectorOperatorOverload.h"
+#include <iomanip>
 
 using namespace std;
 
+int PartTwo();
+int StageFour();
+
 int main() 
 {
+	string stage = "";
+	cout << "Run Part 2 or Stage 4? (2 or 4): ";
+	cin >> stage;
+
+	if (stage == "2")
+	{
+		return PartTwo();
+	}
+	else if (stage == "4")
+	{
+		return StageFour();
+	}
+	else
+	{
+		cout << "Invalid option. Please rerun and try again." << endl;
+		return 1;
+	}
+}
+
+int PartTwo()
+{
 	TreeMap<char, BinaryTree<string>> map;
-	
+
 	// The name of the file that the application will try to read
 	// Example file is "TextFile.txt"
 	string fileName = "";
@@ -30,7 +55,7 @@ int main()
 		{
 			fin >> fileString;
 			//cout << "New string from file: " <<  fileString << endl;
-			
+
 			// Filtered word from file
 			string wordToInput = "";
 			// Filter out any non-alphabetic characters from the string, as the word should contain letters
@@ -41,7 +66,7 @@ int main()
 					wordToInput += tolower(c);	// Convert to lowercase to avoid duplicate letters/words in the TreeMap
 				}
 			}
-			
+
 			// If there were no letters, we ignore it and move to the next string in the file
 			if (!wordToInput.empty())
 			{
@@ -70,7 +95,7 @@ int main()
 
 	BinaryTree<char> keyTree(map.keySet());
 	cout << "Letters contained in file: " << keyTree << endl << endl;
-	
+
 	char* keyArr = keyTree.toArray();
 
 	cout << "List of words in file by letter: " << endl;
@@ -80,5 +105,138 @@ int main()
 	}
 
 	//map.print();
+	return 0;
+}
+
+struct Game
+{
+	string title;
+	string releaseDate;
+	string genre;
+	string platform;
+	double price;
+};
+
+TreeMap<string, vector<Game>> createIndex(const vector<Game>& data, const string& field)
+{
+	TreeMap<string, vector<Game>> index;
+	for (Game game : data)
+	{
+		string key;
+		if (field == "game_title")
+		{ key = game.title; }
+		else if (field == "release_date") 
+		{ key = game.releaseDate; }
+		else if (field == "genre") 
+		{ key = game.genre; }
+		else if (field == "platform") 
+		{ key = game.platform; }
+		else if (field == "price") 
+		{ key = to_string(game.price); }
+
+		if (!key.empty())
+		{
+			if (index.containsKey(key))
+			{
+				index[key].push_back(game);
+			}
+			else
+			{
+				vector<Game> newTree;
+				newTree.push_back(game);
+				index.put(key, newTree);
+			}
+		}
+	}
+	return index;
+}
+
+void printIndex(TreeMap<string, vector<Game>>& index, const string& field)
+{
+	cout << setw(25) << left << field << setw(25) << left << "count" << endl;
+
+	BinaryTree<string> keyTree(index.keySet());
+	string* keyArr = keyTree.toArray();
+
+	for (int i = 0; i < keyTree.count(); i++)
+	{
+		cout << setw(25) << left << keyArr[i] << setw(25) << left << index.get(keyArr[i]).size() << endl;
+	}
+}
+
+int StageFour()
+{
+	string fileName = "VideoGames.csv";
+
+	vector<Game> games;
+	vector<string> headers;
+
+	ifstream fin(fileName);
+	if (fin)
+	{
+		string column;
+		for (int i = 0; i < 4; i++)
+		{
+			getline(fin, column, ',');
+			headers.push_back(column);
+		}
+		getline(fin, column, '\n');
+		headers.push_back(column);
+
+		while (!fin.eof())
+		{
+			Game newGame;
+			//cout << "reading title..." << endl;
+			getline(fin, newGame.title, ',');
+			//cout << "reading release date..." << endl;
+			getline(fin, newGame.releaseDate, ',');
+			//cout << "reading genre..." << endl;
+			getline(fin, newGame.genre, ',');
+			//cout << "reading platform..." << endl;
+			getline(fin, newGame.platform, ',');
+			string price;
+			//cout << "reading price..." << endl;
+			getline(fin, price, '\n');
+			newGame.price = stod(price);
+
+			games.push_back(newGame);
+		}
+	}
+	else
+	{
+		cout << "Unable to open file" << endl;
+		return 1;
+	}
+
+	cout << "Data read from " << fileName << ": " << endl;
+	for (string column : headers)
+	{
+		cout << setw(25) << left << column;
+	}
+	cout << endl;
+	for (Game g : games)
+	{
+		cout << setw(25) << left << g.title << setw(25) << left << g.releaseDate << setw(25) << left << g.genre << setw(25) << left << g.platform << g.price << endl;
+	}
+
+
+	cout << endl << endl << "Create an Index from a field (";
+	for (string column : headers)
+	{
+		if (column != headers.front())
+		{
+			cout << ", ";
+		}
+		cout << column;
+	}
+	cout << "): ";
+
+	string field;
+	cin >> field;
+
+	TreeMap<string, vector<Game>> newIndex = createIndex(games, field);
+	printIndex(newIndex, field);
+
+
 	return 0;
 }

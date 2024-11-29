@@ -40,7 +40,7 @@ TreeMap<K, V>::TreeMap(const TreeMap<K, V>& other)
 {
 	BST = nullptr;
 	if (other.BST != nullptr)
-		BST = new TreeMap<K, V>(*other.BST);
+		BST = new BinaryTree<TreeMapNode<K, V>>(*other.BST);
 }
 
 template <class K, class V>
@@ -49,7 +49,7 @@ TreeMap<K, V> TreeMap<K, V>::operator=(const TreeMap<K, V>& other)
 	if (this == &other)
 		return *this;
 	if (other.BST != nullptr)
-		BST = new TreeMap<K, V>(*other.BST);
+		BST = new BinaryTree<TreeMapNode<K, V>>(*other.BST);
 	else
 		BST = nullptr;
 	return *this;

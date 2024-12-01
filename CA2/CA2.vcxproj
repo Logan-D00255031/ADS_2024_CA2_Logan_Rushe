@@ -134,7 +134,7 @@
     <ClInclude Include="VectorOperatorOverload.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Part2.cpp" />
+    <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="TextFile.txt" />

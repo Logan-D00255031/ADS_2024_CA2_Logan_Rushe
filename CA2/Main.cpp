@@ -123,6 +123,9 @@ vector<Game> searchForValueByField(TreeMap<string, vector<Game>>& index, string&
 void printResults(vector<string>& headers, vector<Game>& games);
 bool containsHeader(vector<std::string>& headers, std::string& field);
 
+void createIndexMenuItem(vector<Game>& gameData, vector<string>& headers);
+void searchDataForValueMenuItem(std::vector<std::string>& headers, std::vector<Game>& games);
+
 TreeMap<string, vector<Game>> createIndex(const vector<Game>& data, const string& field)
 {
 	TreeMap<string, vector<Game>> index;
@@ -213,6 +216,65 @@ bool containsHeader(vector<std::string>& headers, std::string& field)
 	return false;
 }
 
+void createIndexMenuItem(vector<Game>& gameData, vector<string>& headers)
+{
+	cout << endl << endl << "Create an Index from one of the following fields: " << headers << " ";
+
+	string field;
+	cin >> field;
+
+	// Check if the input is a valid header
+	bool isHeader = containsHeader(headers, field);
+
+	if (isHeader)
+	{
+		TreeMap<string, vector<Game>> newIndex = createIndex(gameData, field);
+		printIndex(newIndex, field);
+	}
+	else
+	{
+		cout << "Invalid field." << endl;
+	}
+}
+
+void searchDataForValueMenuItem(vector<Game>& gameData, vector<string>& headers)
+{
+	cout << endl << "Search for a value from a field " << headers << ": ";
+	string field;
+	cin >> field;
+
+	if (!containsHeader(headers, field))
+	{
+		cout << "Invalid field." << endl;
+		return;
+	}
+
+	cout << endl << "Value: ";
+	string value;
+	cin.ignore();
+	getline(cin, value);
+
+	// Convert price field values to double and back for correct search format
+	if (field == "price")
+	{
+		double price = stod(value);
+		value = to_string(price);
+	}
+
+	TreeMap<string, vector<Game>> newIndex = createIndex(gameData, field);
+	vector<Game> results = searchForValueByField(newIndex, value);
+
+	if (!results.empty())
+	{
+		cout << "Results for " << field << " = " << value << ": " << endl;
+		printResults(headers, results);
+	}
+	else
+	{
+		cout << "No results found." << endl;
+	}
+}
+
 int StageFour()
 {
 	string fileName = "VideoGames.csv";
@@ -257,60 +319,42 @@ int StageFour()
 		return 1;
 	}
 
-	cout << "Data read from " << fileName << ": " << endl;
-	printResults(headers, games);
+	bool run = true;
 
+	while (run) {
+		cout << "Select an option: " << endl
+			<< "1: View all data from file" << endl
+			<< "2: Create index from field" << endl
+			<< "3: Search for field value in data" << endl
+			<< "4: Exit" << endl;
 
-	cout << endl << endl << "Create an Index from a field " << headers << ": ";
+		string option;
+		cin >> option;
 
-	string field;
-	cin >> field;
-
-	bool isHeader = containsHeader(headers, field);
-
-	if (isHeader)
-	{
-		TreeMap<string, vector<Game>> newIndex = createIndex(games, field);
-		printIndex(newIndex, field);
+		if (option == "1")
+		{
+			cout << "Data read from " << fileName << ": " << endl;
+			printResults(headers, games);
+		}
+		else if (option == "2")
+		{
+			createIndexMenuItem(games, headers);
+		}
+		else if (option == "3")
+		{
+			searchDataForValueMenuItem(games, headers);
+		}
+		else if (option == "4")
+		{
+			cout << "Goodbye!" << endl;
+			run = false;
+		}
+		else 
+		{ 
+			cout << "Invalid option. Please try again." << endl; 
+		}
+		cout << endl;
 	}
-	else
-	{
-		cout << "Invalid field." << endl;
-	}
-
-
-	cout << endl << endl << "Search for a value from a field " << headers << ": ";
-	cin >> field;
-
-	if (!containsHeader(headers, field))
-	{
-		cout << "Invalid field." << endl;
-		return 1;
-	}
-
-	cout << endl << "Value: ";
-	string value;
-	cin >> value;
-
-	if (field == "price")
-	{
-		double price = stod(value);
-		value = to_string(price);
-	}
-
-	TreeMap<string, vector<Game>> newIndex = createIndex(games, field);
-	vector<Game> results = searchForValueByField(newIndex, value);
-	
-	if (!results.empty())
-	{
-		cout << "Results for " << field << " = " << value << ": " << endl;
-		printResults(headers, results);
-	}
-	else 
-	{
-		cout << "No results found." << endl;
-	}
-	
 
 	return 0;
 }

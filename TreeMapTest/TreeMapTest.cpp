@@ -50,8 +50,9 @@ namespace TreeMapTest
 			Assert::IsTrue((map->get(s2) == l2), L"Key contains incorrect value");
 			Assert::IsTrue((map->get(s3) == l3), L"Key contains incorrect value");
 			map->clear();
-			auto funct = [&]() {map->get(s2); };
-			Assert::ExpectException<logic_error>(funct, L"Exception not thrown");
+			//auto funct = [&]() {map->get(s2); };
+			//Assert::ExpectException<logic_error>(funct, L"Exception not thrown");
+			Assert::IsTrue(map->get(s2).empty(), L"Empty value not returned");
 		}
 
 		TEST_METHOD(testTreeMapContainsKey)
@@ -77,16 +78,18 @@ namespace TreeMapTest
 		{
 			TreeMap<string, list<string>>* map = new TreeMap<string, list<string>>();
 			map->put(s3, l3);
-			auto funct = [&]() {map->get(s1); };
-			Assert::ExpectException<logic_error>(funct, L"No exception thrown");
+			//auto funct = [&]() {map->get(s1); };
+			//Assert::ExpectException<logic_error>(funct, L"No exception thrown");
+			Assert::IsTrue(map->get(s1).empty(), L"Empty value not returned");
 		}
 
 		TEST_METHOD(testGetValueOfKeyFromClearedTreeMap)
 		{
 			TreeMap<string, list<string>>* map = new TreeMap<string, list<string>>();
 			map->clear();
-			auto funct = [&]() {map->get(s3); };
-			Assert::ExpectException<logic_error>(funct, L"No exception thrown");
+			//auto funct = [&]() {map->get(s3); };
+			//Assert::ExpectException<logic_error>(funct, L"No exception thrown");
+			Assert::IsTrue(map->get(s3).empty(), L"Empty value not returned");
 		}
 
 		TEST_METHOD(testGetValueOfKeyContainedInTreeMap)
@@ -94,7 +97,7 @@ namespace TreeMapTest
 			TreeMap<string, list<string>>* map = new TreeMap<string, list<string>>();
 			map->put(s1, l1);
 			map->put(s2, l2);
-			Assert::AreEqual(map->get(s2).size(), l2.size(), L"Tree key value has incorrect size");
+			Assert::IsTrue(map->get(s2) == l2, L"Tree key value has incorrect value");
 		}
 
 		TEST_METHOD(testReturnEmptyKeySet)
@@ -146,24 +149,27 @@ namespace TreeMapTest
 			Assert::AreEqual(map->size(), 2, L"Map is incorrect size");
 			Assert::IsTrue((map->get(s3) == l3), L"Key contains incorrect value");
 			Assert::IsTrue((map->get(s1) == l1), L"Key contains incorrect value");
-			auto funct = [&]() {map->get(s2); };
-			Assert::ExpectException<logic_error>(funct, L"Exception not thrown - Map still contains key");
+			//auto funct = [&]() {map->get(s2); };
+			//Assert::ExpectException<logic_error>(funct, L"Exception not thrown - Map still contains key");
+			Assert::IsTrue(map->get(s2).empty(), L"Empty value not returned");
 		}
 
 		TEST_METHOD(testGetValueOfKeyNotInTreeMapFromOperator)
 		{
 			TreeMap<string, list<string>> map;
 			map.put(s3, l3);
-			auto funct = [&]() {map[s1]; };
-			Assert::ExpectException<logic_error>(funct, L"No exception thrown");
+			//auto funct = [&]() {map[s1]; };
+			//Assert::ExpectException<logic_error>(funct, L"No exception thrown");
+			Assert::IsTrue(map[s1].empty(), L"Empty value not returned");
 		}
 
 		TEST_METHOD(testGetValueOfKeyFromClearedTreeMapFromOperator)
 		{
 			TreeMap<string, list<string>> map;
 			map.clear();
-			auto funct = [&]() {map[s2]; };
-			Assert::ExpectException<logic_error>(funct, L"No exception thrown");
+			//auto funct = [&]() {map[s2]; };
+			//Assert::ExpectException<logic_error>(funct, L"No exception thrown");
+			Assert::IsTrue(map[s2].empty(), L"Empty value not returned");
 		}
 
 		TEST_METHOD(testGetValueOfKeyContainedInTreeMapFromOperator)

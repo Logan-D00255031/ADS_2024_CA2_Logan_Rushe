@@ -117,6 +117,12 @@ struct Game
 	double price;
 };
 
+TreeMap<string, vector<Game>> createIndex(const vector<Game>& data, const string& field);
+void printIndex(TreeMap<string, vector<Game>>& index, const string& field);
+vector<Game> searchForValueByField(TreeMap<string, vector<Game>>& index, string& value);
+void printResults(vector<string>& headers, vector<Game>& games);
+bool containsHeader(vector<std::string>& headers, std::string& field);
+
 TreeMap<string, vector<Game>> createIndex(const vector<Game>& data, const string& field)
 {
 	TreeMap<string, vector<Game>> index;
@@ -158,10 +164,53 @@ void printIndex(TreeMap<string, vector<Game>>& index, const string& field)
 	BinaryTree<string> keyTree(index.keySet());
 	string* keyArr = keyTree.toArray();
 
+	bool isPrice = field == "price";
 	for (int i = 0; i < keyTree.count(); i++)
 	{
-		cout << setw(25) << left << keyArr[i] << setw(25) << left << index.get(keyArr[i]).size() << endl;
+		cout << setw(25) << left;
+		// Print the price field values as doubles
+		if (isPrice)
+		{
+			cout << stod(keyArr[i]);
+		}
+		else
+		{
+			cout << keyArr[i];
+		}
+		cout << setw(25) << left << index.get(keyArr[i]).size() << endl;
 	}
+}
+
+vector<Game> searchForValueByField(TreeMap<string, vector<Game>>& index, string& value)
+{
+	vector<Game> results;
+	results = index.get(value);
+	return results;
+}
+
+void printResults(vector<string>& headers, vector<Game>& results)
+{
+	for (string column : headers)
+	{
+		cout << setw(25) << left << column;
+	}
+	cout << endl;
+	for (Game g : results)
+	{
+		cout << setw(25) << left << g.title << setw(25) << left << g.releaseDate << setw(25) << left << g.genre << setw(25) << left << g.platform << g.price << endl;
+	}
+}
+
+bool containsHeader(vector<std::string>& headers, std::string& field)
+{
+	for (string header : headers)
+	{
+		if (field == header)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 int StageFour()
@@ -209,34 +258,59 @@ int StageFour()
 	}
 
 	cout << "Data read from " << fileName << ": " << endl;
-	for (string column : headers)
-	{
-		cout << setw(25) << left << column;
-	}
-	cout << endl;
-	for (Game g : games)
-	{
-		cout << setw(25) << left << g.title << setw(25) << left << g.releaseDate << setw(25) << left << g.genre << setw(25) << left << g.platform << g.price << endl;
-	}
+	printResults(headers, games);
 
 
-	cout << endl << endl << "Create an Index from a field (";
-	for (string column : headers)
-	{
-		if (column != headers.front())
-		{
-			cout << ", ";
-		}
-		cout << column;
-	}
-	cout << "): ";
+	cout << endl << endl << "Create an Index from a field " << headers << ": ";
 
 	string field;
 	cin >> field;
 
-	TreeMap<string, vector<Game>> newIndex = createIndex(games, field);
-	printIndex(newIndex, field);
+	bool isHeader = containsHeader(headers, field);
 
+	if (isHeader)
+	{
+		TreeMap<string, vector<Game>> newIndex = createIndex(games, field);
+		printIndex(newIndex, field);
+	}
+	else
+	{
+		cout << "Invalid field." << endl;
+	}
+
+
+	cout << endl << endl << "Search for a value from a field " << headers << ": ";
+	cin >> field;
+
+	if (!containsHeader(headers, field))
+	{
+		cout << "Invalid field." << endl;
+		return 1;
+	}
+
+	cout << endl << "Value: ";
+	string value;
+	cin >> value;
+
+	if (field == "price")
+	{
+		double price = stod(value);
+		value = to_string(price);
+	}
+
+	TreeMap<string, vector<Game>> newIndex = createIndex(games, field);
+	vector<Game> results = searchForValueByField(newIndex, value);
+	
+	if (!results.empty())
+	{
+		cout << "Results for " << field << " = " << value << ": " << endl;
+		printResults(headers, results);
+	}
+	else 
+	{
+		cout << "No results found." << endl;
+	}
+	
 
 	return 0;
 }

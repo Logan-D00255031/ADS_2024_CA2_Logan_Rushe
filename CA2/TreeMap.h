@@ -92,18 +92,21 @@ bool TreeMap<K, V>::containsKey(K key)
 }
 
 // Returns the value associated with the specified key
-// Throws a logic error if the key cannot be found
+// Returns a null value if the key cannot be found
 template<class K, class V>
 V& TreeMap<K, V>::get(K key)
 {
-	// Throw a logic error if BST is null or empty, or it does not contain the key
+	static V nullValue;
+	// Return a null value if BST is null or empty, or it does not contain the key
 	if (BST == nullptr || BST->root == nullptr)
 	{
-		throw logic_error("Tree is empty");
+		return nullValue;
+		//throw logic_error("Tree is empty");
 	}
 	if (!containsKey(key))
 	{
-		throw logic_error("Item not found");
+		return nullValue;
+		//throw logic_error("Item not found");
 	}
 	TreeMapNode<K, V> desiredKey(key);
 	TreeMapNode<K, V>& foundKey = BST->get(desiredKey);
